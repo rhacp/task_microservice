@@ -7,7 +7,7 @@ services:
     environment:
       - DB_URL=jdbc:postgresql://db:5432/task_microservice
       - DB_USERNAME=developer
-      - DB_PASSWORD=12345
+      - DB_PASSWORD=123456
     ports:
       - 8080:8080
   db:
@@ -15,7 +15,7 @@ services:
     container_name: microservicedb
     environment:
       - POSTGRES_DB=task_microservice
-      - POSTGRES_PASSWORD=12345
+      - POSTGRES_PASSWORD=123456
       - POSTGRES_USER=developer
     ports:
       - 8000:5432
