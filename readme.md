@@ -32,7 +32,7 @@ Once the image is created, you can run the microservice in a Docker stack called
 
 Once the application is running, you can send a POST request on the `/api/input` endpoint with the JSON input in the request body through Postman or any other calling tool. The service will then make the calculations according to the input, send the answer to the REST endpoint and return a response containing details about the call.
 
-ENDPOINT: `http://localhost:8080/api/input`
+POST Request URL: `http://localhost:8080/api/input`
 
 ##### JSON Input Example
 
