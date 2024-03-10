@@ -6,7 +6,6 @@ import com.andrei.taskmicroservice.models.dtos.ResponsePOSTDTO;
 import com.andrei.taskmicroservice.models.entities.Input;
 import com.andrei.taskmicroservice.models.entities.Response;
 import com.andrei.taskmicroservice.repositories.InputRepository;
-import com.andrei.taskmicroservice.repositories.ResponseRepository;
 import com.andrei.taskmicroservice.services.response.ResponseService;
 import com.andrei.taskmicroservice.utils.properties.TaskAPIProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -32,22 +31,22 @@ public class InputServiceImpl  implements InputService{
 
     private final TypeMap<InputDTO, Input> propertyMapper;
 
-    public InputServiceImpl(ModelMapper modelMapper, InputRepository inputRepository, TaskAPIProperties taskAPIProperties, ResponseService responseService, @Qualifier("propertyMapper") TypeMap<InputDTO, Input> propertyMapper) {
+    private final WebClient webClient;
+
+    public InputServiceImpl(ModelMapper modelMapper, InputRepository inputRepository, TaskAPIProperties taskAPIProperties, ResponseService responseService, @Qualifier("propertyMapper") TypeMap<InputDTO, Input> propertyMapper, WebClient webClient) {
         this.modelMapper = modelMapper;
         this.inputRepository = inputRepository;
         this.taskAPIProperties = taskAPIProperties;
         this.responseService = responseService;
         this.propertyMapper = propertyMapper;
+        this.webClient = webClient;
     }
 
     @Override
-    public ResponseDTO calculationInput(InputDTO inputDTO) {
-        Input input = modelMapper.map(inputDTO, Input.class);
-        propertyMapper.map(inputDTO, input);
-        Input savedInput = inputRepository.save(input);
-        log.info("Input {} saved in db. Method: {}", savedInput.getId(), "calculation");
+    public ResponseDTO fullFunction(InputDTO inputDTO) {
+        Input savedInput = createInput(inputDTO);
 
-        Double result = calculation(input);
+        Double result = calculation(savedInput);
         Response savedResponse = responseService.createResponseForCalculationInput(result, savedInput);
 
         String serverResponse = makeCallToRestEndpoint(savedInput.getOperationNumber(), result);
@@ -55,6 +54,16 @@ public class InputServiceImpl  implements InputService{
         return new ResponseDTO(savedResponse.getResponseId(), savedResponse.getResult(), savedInput, serverResponse);
     }
 
+    public Input createInput(InputDTO inputDTO) {
+        Input input = modelMapper.map(inputDTO, Input.class);
+        propertyMapper.map(inputDTO, input);
+        Input savedInput = inputRepository.save(input);
+        log.info("Input {} saved in db. Method: {}", savedInput.getId(), "calculation");
+
+        return savedInput;
+    }
+
+    @Override
     public Double calculation(Input input) {
         Double result = 0D;
 
@@ -73,16 +82,13 @@ public class InputServiceImpl  implements InputService{
         return result;
     }
 
+    @Override
     public String makeCallToRestEndpoint(Long operationNumber, Double result) {
-        Long test = 80L;
-
-        String callUrl = taskAPIProperties.getTestBaseUrlFirst() + test + taskAPIProperties.getTestBaseUrlSecond();
+        String callUrl = taskAPIProperties.getBaseUrlFirst() + operationNumber + taskAPIProperties.getBaseUrlSecond();
 
         ResponsePOSTDTO response = new ResponsePOSTDTO(result);
 
-        WebClient client = WebClient.create();
-
-        String callResponse = client.post()
+        String callResponse = webClient.post()
                 .uri(callUrl)
                 .header("Accept-Language", taskAPIProperties.getHeader())
                 .header("Operation-Number", Long.toString(operationNumber))

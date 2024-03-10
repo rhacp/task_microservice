@@ -2,15 +2,14 @@
 
 First, download the repository as a ZIP file and build the project with Maven.
 
-Then, you can run a Docker stack with both the application and the database that will stay online.
+Then, you can run a Docker stack with both the application and the database containers that will stay online.
 
 ---
 
 ### Build the Project with Maven
 
-1. Ensure you are in the project's root directory. Then, build the project using Maven with the following command: <br>
-   `mvn clean package`
-2. Then, the calculations are made and the call to the REST endpoint is sent.
+Ensure you are in the project's root directory. Then, build the project using Maven with the following command: <br>
+`mvn clean package`
 
 ---
 

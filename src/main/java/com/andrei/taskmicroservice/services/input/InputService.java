@@ -11,7 +11,14 @@ public interface InputService {
      *
      * @param inputDTO Input object.
      */
-    ResponseDTO calculationInput(InputDTO inputDTO);
+    ResponseDTO fullFunction(InputDTO inputDTO);
+
+    /**
+     * Helper that converts InputDTO in Input, saves it in DB, and then returns it.
+     *
+     * @param inputDTO Input object.
+     */
+    Input createInput(InputDTO inputDTO);
 
     /**
      * Helper that does the calculations only according to the input object.

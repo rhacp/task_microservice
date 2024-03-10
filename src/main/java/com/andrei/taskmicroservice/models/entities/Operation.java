@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Operation {
 
-    private Long operationId;
-
     private String command;
 
     private Double number;

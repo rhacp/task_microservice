@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class OperationDTO {
 
-    private Long operationId;
-
     private String command;
 
     private Double number;

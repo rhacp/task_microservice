@@ -22,6 +22,6 @@ public class InputController {
 
     @PostMapping
     public ResponseEntity<ResponseDTO> calculation(@Valid @RequestBody InputDTO inputDTO) {
-        return ResponseEntity.ok(inputService.calculationInput(inputDTO));
+        return ResponseEntity.ok(inputService.fullFunction(inputDTO));
     }
 }

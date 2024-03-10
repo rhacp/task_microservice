@@ -2,9 +2,11 @@ package com.andrei.taskmicroservice.models.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,7 +17,7 @@ public class Response {
     public Response(Double result, Input operation) {
 
         this.result = result;
-        this.operation = operation;
+        this.input = operation;
     }
 
     @Id
@@ -27,5 +29,5 @@ public class Response {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "input_id", referencedColumnName = "id")
-    private Input operation;
+    private Input input;
 }

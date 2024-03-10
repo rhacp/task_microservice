@@ -23,10 +23,10 @@ logging:
 spring.output.ansi.enabled: ALWAYS
 
 # Task API
-task.api.base.urlFirst: "https://test.com/api/"
+task.api.base.urlFirst: "https://dummy.com/api/"
 task.api.base.urlSecond: "/result"
 
 #REST CALL TEST
-callUrlFirst: "http://192.168.0.101:"
+callUrlFirst: "http://localhost:"
 callUrlSecond: "/post"
 header: "en-US"
