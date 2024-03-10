@@ -28,6 +28,30 @@ Once the image is created, you can run the microservice in a Docker stack called
 
 ---
 
+### Usage
+
+Once the application is running, you can send a POST request on the `/api/input` endpoint with the JSON input in the request body through Postman or a tool like curl. The service will then make the calculations according to the input, send the answer to the REST endpoint and return a response containing details about the call.
+
+`curl http://localhost:8080/api/input`
+
+##### JSON Input Example
+
+```
+{
+  "operation_number": 5,
+  "input_array":[
+    {"command":"append", "number": 22},
+    {"command":"multiply", "number": 2},
+    {"command":"power", "number": 2},
+    {"command":"reduce", "number": 2937},
+    {"command":"multiply", "number": 4},
+    {"command":"divide", "number": 9}
+  ]
+}
+```
+
+---
+
 ### Tech Stack
 
 * Java 17
