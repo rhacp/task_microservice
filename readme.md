@@ -23,7 +23,7 @@ Ensure you are in the project's root directory. Create a new Docker image named 
 
 ##### Run Docker Compose File
 
-Once the image is created, you can run the microservice in a Docker stack called "task-standalone" by using the following command:<br>
+Once the image is created, ensure you are in the project's root directory. You can then run the microservice in a Docker stack called "task-standalone" by using the following command:<br>
 `docker-compose up -d`
 
 ---
