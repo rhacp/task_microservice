@@ -54,7 +54,7 @@ class InputServiceImplTest {
 
     @Test
     void calculation_validInput() {
-        //GIVEN
+        //ARRANGE
         List<Operation> inputArray = Arrays.asList(
                 new Operation("append", 22D),
                 new Operation("multiply", 2D),
@@ -71,16 +71,16 @@ class InputServiceImplTest {
 
         Double expectedResult = -444.8888888888889D;
 
-        //WHEN
+        //ACT
         Double result = inputService.calculation(input);
 
-        //THEN
+        //ASSERT
         assertThat(result).isEqualTo(expectedResult);
     }
 
     @Test
     void calculationInput_emptyInput() {
-        //GIVEN
+        //ARRANGE
         List<Operation> inputArray = new ArrayList<>();
         Input input = Input.builder()
                 .id(1L)
@@ -90,16 +90,16 @@ class InputServiceImplTest {
 
         Double expectedResult = 0D;
 
-        //WHEN
+        //ACT
         Double result = inputService.calculation(input);
 
-        //THEN
+        //ASSERT
         assertThat(result).isEqualTo(expectedResult);
     }
 
     @Test
     void calculationInput_invalidInput() {
-        //GIVEN
+        //ARRANGE
         Input input = Input.builder()
                 .id(1L)
                 .operationNumber(1L)
@@ -107,15 +107,15 @@ class InputServiceImplTest {
 
         Double expectedResult = 0D;
 
-        //WHEN
+        //ACT
 
-        //THEN
+        //ASSERT
         assertThatExceptionOfType(java.lang.NullPointerException.class).isThrownBy(() -> inputService.calculation(input));
     }
 
     @Test
     void createInput_saveDB() {
-        //GIVEN
+        //ARRANGE
         List<OperationDTO> input_array = Arrays.asList(
                 new OperationDTO("append", 22D),
                 new OperationDTO("multiply", 2D),
@@ -156,10 +156,10 @@ class InputServiceImplTest {
         when(modelMapper.map(inputDTO, Input.class)).thenReturn(expectedInput);
         when(inputRepository.save(expectedInput)).thenReturn(savedInput);
 
-        //WHEN
+        //ACT
         Input returnInput = inputService.createInput(inputDTO);
 
-        //THEN
+        //ASSERT
         verify(inputRepository, times(1)).save(expectedInput);
         assertThat(returnInput).isEqualTo(savedInput);
     }
